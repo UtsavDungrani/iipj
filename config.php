@@ -18,7 +18,20 @@ if ($is_localhost) {
 }
 
 // Site Configuration
-define('SITE_URL', $is_localhost ? 'http://localhost/iipj' : 'https://your-production-domain.com');
+if ($is_localhost) {
+    define('SITE_URL', 'http://localhost/iipj');
+} else {
+    // Determine production domain dynamically. Support both iipj.in and iipj.utsavdungrani.in.
+    $host = isset($_SERVER['HTTP_HOST']) ? strtolower($_SERVER['HTTP_HOST']) : '';
+    if (strpos($host, 'iipj.in') !== false && strpos($host, 'utsavdungrani') === false) {
+        define('SITE_URL', 'https://iipj.in/');
+    } elseif (strpos($host, 'utsavdungrani.in') !== false) {
+        define('SITE_URL', 'https://iipj.utsavdungrani.in/');
+    } else {
+        // Fallback: use the request host with HTTPS
+        define('SITE_URL', 'https://' . $host . '/');
+    }
+}
 define('UPLOAD_DIR', __DIR__ . '/uploads/');
 define('PDF_DIR', UPLOAD_DIR . 'pdfs/');
 define('COVER_DIR', UPLOAD_DIR . 'covers/');
