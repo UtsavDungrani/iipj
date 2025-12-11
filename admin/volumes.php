@@ -480,7 +480,7 @@ if ($volume) {
                 <li><a href="volumes.php">Manage Volumes</a></li>
                 <li><a href="recent_updates.php">Recent Updates</a></li>
                 <li><a href="change_password.php">Change Password</a></li>
-                <li><a href="../volumes.php">View Site</a></li>
+                <li><a href="../index.php">View Site</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>

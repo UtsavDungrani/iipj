@@ -248,7 +248,7 @@ $recentVolumes = $recentStmt->fetchAll();
                 <li><a href="volumes.php">Manage Volumes</a></li>
                 <li><a href="recent_updates.php">Recent Updates</a></li>
                 <li><a href="change_password.php">Change Password</a></li>
-                <li><a href="../volumes.php">View Site</a></li>
+                <li><a href="../index.php">View Site</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
@@ -284,7 +284,7 @@ $recentVolumes = $recentStmt->fetchAll();
             <div class="action-card">
                 <h3>👁️ View Site</h3>
                 <p>Preview how your site looks to visitors</p>
-                <a href="../volumes.php" class="btn btn-secondary" target="_blank">View Site</a>
+                <a href="../index.php" class="btn btn-secondary" target="_blank">View Site</a>
             </div>
         </div>
 
