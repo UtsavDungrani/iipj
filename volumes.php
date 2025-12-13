@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta property="og:title" content="India Independent Philosophical Journal">
-  <meta property="og:description" content="Advancing Philosophical Discourse Through Rigorous Academic Research.">
-  <meta property="og:image" content="https://iipj.in/assets/images/logo.png">
-  <meta property="og:url" content="https://iipj.in">
+    <meta property="og:title" content="India Independent Philosophical Journal">
+    <meta property="og:description" content="Advancing Philosophical Discourse Through Rigorous Academic Research.">
+    <meta property="og:image" content="https://iipj.in/assets/images/logo.png">
+    <meta property="og:url" content="https://iipj.in">
     <link rel="icon" type="image/png" href="assets/images/favicon.png" />
     <title>Journal Volumes - India Independent Philosophical Journal</title>
     <style>
@@ -613,6 +613,167 @@
             color: var(--text-light);
         }
 
+        /* Volume Modal */
+        .volume-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            z-index: 2000;
+        }
+
+        .volume-modal-overlay.active {
+            display: flex;
+        }
+
+        .volume-modal {
+            background: var(--bg-white);
+            border-radius: 16px;
+            max-width: 900px;
+            width: min(95vw, 900px);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+        }
+
+        .volume-modal-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .volume-modal-title {
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .volume-modal-meta {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .volume-modal-close {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            border: none;
+            background: transparent;
+            font-size: 1.75rem;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.2s ease;
+        }
+
+        .volume-modal-close:hover {
+            color: var(--primary-color);
+        }
+
+        .volume-modal-cover {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .volume-modal-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .volume-modal-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .volume-modal-info-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .volume-modal-info-value {
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        .volume-modal-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .volume-modal-articles {
+            margin-top: 2rem;
+        }
+
+        .volume-modal-articles h3 {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .volume-modal-article-item {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .volume-modal-article-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .volume-modal-article-authors {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .volume-modal-article-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .volume-modal-article-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .volume-card {
+            cursor: pointer;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .mobile-menu-btn {
@@ -762,6 +923,20 @@
 
         <!-- Volumes Grid -->
         <div id="volumesContainer" class="volumes-grid"></div>
+    </div>
+
+    <!-- Volume Modal -->
+    <div class="volume-modal-overlay" id="volumeModal" aria-hidden="true">
+        <div class="volume-modal" role="dialog" aria-modal="true" aria-labelledby="volumeModalTitle">
+            <button class="volume-modal-close" id="volumeModalClose" aria-label="Close volume">&times;</button>
+            <div class="volume-modal-header">
+                <h2 class="volume-modal-title" id="volumeModalTitle"></h2>
+                <div class="volume-modal-meta" id="volumeModalMeta"></div>
+            </div>
+            <div id="volumeModalCover"></div>
+            <div class="volume-modal-info" id="volumeModalInfo"></div>
+            <div class="volume-modal-actions" id="volumeModalActions"></div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -944,7 +1119,7 @@
             container.innerHTML = filteredVolumes
                 .map(
                     (volume) => `
-                <div class="volume-card">
+                <div class="volume-card" data-volume-card data-volume-id="${volume.volumeId}" tabindex="0" role="button" aria-label="View volume details">
                     <div class="volume-header">
                         <div class="volume-cover">
                             ${volume.coverImage
@@ -978,8 +1153,8 @@
                         </div>
                         <div class="volume-actions">
                             ${volume.pdfUrl
-                            ? `<a href="${volume.pdfUrl}" class="btn btn-primary" target="_blank">📥 Download PDF</a>`
-                            : `<button class="btn btn-primary" disabled>PDF Unavailable</button>`
+                            ? `<a href="${volume.pdfUrl}" class="btn btn-primary" target="_blank" rel="noopener" data-modal-ignore>📥 Download PDF</a>`
+                            : `<button class="btn btn-primary" disabled data-modal-ignore>PDF Unavailable</button>`
                         }
                         </div>
                     </div>
@@ -1007,7 +1182,7 @@
                                 </div>
                                 <div class="article-actions">
                                     ${article.pdfUrl
-                                            ? `<a href="${article.pdfUrl}" class="article-btn" target="_blank">Download PDF</a>`
+                                            ? `<a href="${article.pdfUrl}" class="article-btn" target="_blank" rel="noopener">Download PDF</a>`
                                             : ""
                                         }
                                     ${article.abstract ? `<button class="article-btn" onclick="showAbstract('${article.abstract.replace(/'/g, "\\'").replace(/\n/g, '\\n')}')">View Abstract</button>` : ''}
@@ -1041,6 +1216,135 @@
             const options = { year: "numeric", month: "long" };
             return new Date(dateString).toLocaleDateString("en-US", options);
         }
+
+        // Volume Modal functionality
+        (function () {
+            const modalOverlay = document.getElementById('volumeModal');
+            const modalCloseBtn = document.getElementById('volumeModalClose');
+            const modalTitle = document.getElementById('volumeModalTitle');
+            const modalMeta = document.getElementById('volumeModalMeta');
+            const modalCover = document.getElementById('volumeModalCover');
+            const modalInfo = document.getElementById('volumeModalInfo');
+            const modalActions = document.getElementById('volumeModalActions');
+
+            if (!modalOverlay) {
+                return;
+            }
+
+            const openVolumeModal = (volume) => {
+                // Set title
+                modalTitle.textContent = `Volume ${volume.volumeNumber}, Issue ${volume.issueNumber}`;
+
+                // Set meta information
+                modalMeta.innerHTML = `
+                    <span>📅 ${formatDate(volume.publicationDate)}</span>
+                    <span>📄 ${volume.totalArticles || 0} Articles</span>
+                    ${volume.isSpecialEdition ? `<span>✨ Special Edition${volume.specialEditionYear ? ` (${volume.specialEditionYear})` : ''}</span>` : ''}
+                `;
+
+                // Set cover image
+                if (volume.coverImage) {
+                    modalCover.innerHTML = `<img src="${volume.coverImage}" alt="Volume ${volume.volumeNumber}" class="volume-modal-cover">`;
+                } else {
+                    modalCover.innerHTML = '';
+                }
+
+                // Set info grid
+                modalInfo.innerHTML = `
+                    <div class="volume-modal-info-item">
+                        <span class="volume-modal-info-label">Volume Number</span>
+                        <span class="volume-modal-info-value">${volume.volumeNumber}</span>
+                    </div>
+                    <div class="volume-modal-info-item">
+                        <span class="volume-modal-info-label">Issue Number</span>
+                        <span class="volume-modal-info-value">${volume.issueNumber}</span>
+                    </div>
+                    <div class="volume-modal-info-item">
+                        <span class="volume-modal-info-label">Publication Date</span>
+                        <span class="volume-modal-info-value">${formatDate(volume.publicationDate)}</span>
+                    </div>
+                    <div class="volume-modal-info-item">
+                        <span class="volume-modal-info-label">Page Range</span>
+                        <span class="volume-modal-info-value">${volume.pageRange || 'N/A'}</span>
+                    </div>
+                    <div class="volume-modal-info-item">
+                        <span class="volume-modal-info-label">ISSN</span>
+                        <span class="volume-modal-info-value">${volume.issn || 'N/A'}</span>
+                    </div>
+                    <div class="volume-modal-info-item">
+                        <span class="volume-modal-info-label">Total Articles</span>
+                        <span class="volume-modal-info-value">${volume.totalArticles || 0}</span>
+                    </div>
+                `;
+
+                // Set actions
+                if (volume.pdfUrl) {
+                    modalActions.innerHTML = `
+                        <a href="${volume.pdfUrl}" class="btn btn-primary" target="_blank" rel="noopener">
+                            📥 Download Full Volume PDF
+                        </a>
+                    `;
+                } else {
+                    modalActions.innerHTML = `
+                        <button class="btn btn-primary" disabled>PDF Unavailable</button>
+                    `;
+                }
+
+                // Show modal
+                modalOverlay.classList.add('active');
+                modalOverlay.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeModal = () => {
+                modalOverlay.classList.remove('active');
+                modalOverlay.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+
+            // Handle volume card clicks
+            document.addEventListener('click', (event) => {
+                const volumeCard = event.target.closest('[data-volume-card]');
+                if (volumeCard && !event.target.closest('[data-modal-ignore]')) {
+                    const volumeId = volumeCard.getAttribute('data-volume-id');
+                    const volume = allVolumes.find(v => v.volumeId == volumeId);
+                    if (volume) {
+                        event.preventDefault();
+                        openVolumeModal(volume);
+                    }
+                }
+            });
+
+            // Handle keyboard navigation
+            document.addEventListener('keydown', (event) => {
+                const volumeCard = event.target.closest('[data-volume-card]');
+                if (volumeCard && (event.key === 'Enter' || event.key === ' ')) {
+                    if (!event.target.closest('[data-modal-ignore]')) {
+                        event.preventDefault();
+                        const volumeId = volumeCard.getAttribute('data-volume-id');
+                        const volume = allVolumes.find(v => v.volumeId == volumeId);
+                        if (volume) {
+                            openVolumeModal(volume);
+                        }
+                    }
+                }
+            });
+
+            // Close modal handlers
+            modalCloseBtn?.addEventListener('click', closeModal);
+
+            modalOverlay.addEventListener('click', (event) => {
+                if (event.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        })();
 
         // Load volumes on page load
         document.addEventListener("DOMContentLoaded", loadVolumes);
