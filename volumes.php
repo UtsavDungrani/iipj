@@ -676,23 +676,43 @@
             color: var(--primary-color);
         }
 
+        .volume-modal-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            align-items: start;
+        }
+
         .volume-modal-cover {
-            width: auto;
-            max-width: 200px;
-            max-height: 200px;
+            width: 100%;
+            max-width: 100%;
+            max-height: 500px;
             object-fit: contain;
             border-radius: 8px;
-            margin: 0 auto 1.5rem;
             display: block;
             background: var(--bg-light);
             border: 1px solid var(--border-color);
         }
 
+        .volume-modal-cover img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        #volumeModalCover {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .volume-modal-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
-            margin-bottom: 1.5rem;
             padding: 1rem;
             background: var(--bg-light);
             border-radius: 8px;
@@ -819,6 +839,16 @@
             .filters-row {
                 flex-direction: column;
             }
+
+            .volume-modal-content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .volume-modal-info {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
         }
     </style>
 </head>
@@ -933,8 +963,10 @@
                 <h2 class="volume-modal-title" id="volumeModalTitle"></h2>
                 <div class="volume-modal-meta" id="volumeModalMeta"></div>
             </div>
-            <div id="volumeModalCover"></div>
-            <div class="volume-modal-info" id="volumeModalInfo"></div>
+            <div class="volume-modal-content-grid">
+                <div id="volumeModalCover"></div>
+                <div class="volume-modal-info" id="volumeModalInfo"></div>
+            </div>
             <div class="volume-modal-actions" id="volumeModalActions"></div>
         </div>
     </div>
