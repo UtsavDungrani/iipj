@@ -634,8 +634,6 @@
             border-radius: 16px;
             max-width: 900px;
             width: min(95vw, 900px);
-            max-height: 90vh;
-            overflow-y: auto;
             position: relative;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
             padding: 2rem;
@@ -679,11 +677,13 @@
         }
 
         .volume-modal-cover {
-            width: 100%;
-            max-height: 300px;
+            width: auto;
+            max-width: 200px;
+            max-height: 200px;
             object-fit: contain;
             border-radius: 8px;
-            margin-bottom: 1.5rem;
+            margin: 0 auto 1.5rem;
+            display: block;
             background: var(--bg-light);
             border: 1px solid var(--border-color);
         }
