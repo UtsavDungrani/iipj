@@ -676,47 +676,32 @@
             color: var(--primary-color);
         }
 
-        .volume-modal-content {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            align-items: start;
-        }
-
-        .volume-modal-cover-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
         .volume-modal-cover {
-            width: 100%;
-            max-width: 250px;
-            max-height: 350px;
+            width: auto;
+            max-width: 200px;
+            max-height: 200px;
             object-fit: contain;
             border-radius: 8px;
+            margin: 0 auto 1.5rem;
+            display: block;
             background: var(--bg-light);
             border: 1px solid var(--border-color);
         }
 
         .volume-modal-info {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
         }
 
-        .volume-modal-info-row {
+        .volume-modal-info-item {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .volume-modal-info-row:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
+            gap: 0.25rem;
         }
 
         .volume-modal-info-label {
@@ -735,7 +720,6 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            justify-content: center;
         }
 
         .volume-modal-articles {
@@ -834,16 +818,6 @@
 
             .filters-row {
                 flex-direction: column;
-            }
-
-            .volume-modal-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .volume-modal-cover {
-                max-width: 200px;
-                max-height: 250px;
             }
         }
     </style>
@@ -959,10 +933,8 @@
                 <h2 class="volume-modal-title" id="volumeModalTitle"></h2>
                 <div class="volume-modal-meta" id="volumeModalMeta"></div>
             </div>
-            <div class="volume-modal-content">
-                <div class="volume-modal-cover-container" id="volumeModalCover"></div>
-                <div class="volume-modal-info" id="volumeModalInfo"></div>
-            </div>
+            <div id="volumeModalCover"></div>
+            <div class="volume-modal-info" id="volumeModalInfo"></div>
             <div class="volume-modal-actions" id="volumeModalActions"></div>
         </div>
     </div>
@@ -1277,29 +1249,29 @@
                     modalCover.innerHTML = '';
                 }
 
-                // Set info rows
+                // Set info grid
                 modalInfo.innerHTML = `
-                    <div class="volume-modal-info-row">
+                    <div class="volume-modal-info-item">
                         <span class="volume-modal-info-label">Volume Number</span>
                         <span class="volume-modal-info-value">${volume.volumeNumber}</span>
                     </div>
-                    <div class="volume-modal-info-row">
+                    <div class="volume-modal-info-item">
                         <span class="volume-modal-info-label">Issue Number</span>
                         <span class="volume-modal-info-value">${volume.issueNumber}</span>
                     </div>
-                    <div class="volume-modal-info-row">
+                    <div class="volume-modal-info-item">
                         <span class="volume-modal-info-label">Publication Date</span>
                         <span class="volume-modal-info-value">${formatDate(volume.publicationDate)}</span>
                     </div>
-                    <div class="volume-modal-info-row">
+                    <div class="volume-modal-info-item">
                         <span class="volume-modal-info-label">Page Range</span>
                         <span class="volume-modal-info-value">${volume.pageRange || 'N/A'}</span>
                     </div>
-                    <div class="volume-modal-info-row">
+                    <div class="volume-modal-info-item">
                         <span class="volume-modal-info-label">ISSN</span>
                         <span class="volume-modal-info-value">${volume.issn || 'N/A'}</span>
                     </div>
-                    <div class="volume-modal-info-row">
+                    <div class="volume-modal-info-item">
                         <span class="volume-modal-info-label">Total Articles</span>
                         <span class="volume-modal-info-value">${volume.totalArticles || 0}</span>
                     </div>
